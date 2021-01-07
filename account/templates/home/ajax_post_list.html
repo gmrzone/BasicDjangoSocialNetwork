@@ -1,0 +1,10 @@
+{% load thumbnail %}
+{% for i in image_posts %}
+<div class="post-item">
+    <p class="title"><a href="{{ i.get_absolute_url }}" class="post-link">{{i.title}}</a></p>
+    <p class="description">{{i.description|truncatewords:'10'}}</p>
+    <p class="image-img"><img src="{% thumbnail i.image 200x200 crop="smart"%}"></p>
+    <p class="author">by <a href="{{i.user.profile.get_absolute_url}}">{{i.user.username}}</a></p>
+</div>
+<hr style="width: 100%;">
+{% endfor %}

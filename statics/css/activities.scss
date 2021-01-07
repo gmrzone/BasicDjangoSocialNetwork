@@ -1,0 +1,40 @@
+.main-container {
+    display: block;
+
+    h1 {
+        font-size: 30px;
+    }
+    .activities-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .activity-item {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+
+
+
+        }
+        .item-detail {
+            display: flex;
+            align-items: center ;
+            column-gap: 10px;
+            font-size: 14px;
+        }
+        .item-time {
+            grid-area: date;
+            justify-self: left;
+            font-size: 12px;
+            color: darkgrey;
+            font-size: 16px;
+        }
+        .activity-link {
+            color: darkorange;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    }
+}

@@ -1,0 +1,104 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block cssfiles %}
+{% load thumbnail %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}">
+{% endblock %}
+{% block title %}<title>{{selected_profile.user.username|capfirst}}s Profile</title>{% endblock %}
+{% block content %}
+<section class="top-container">
+    <article class="container-main">
+        <div class="profile-pic-container">
+        <!-- Adding profil pic fron facebook if login via facebook else use database profile -->
+        {% if backends.associated %}
+            {% for ass in backends.associated %}
+                    {% if ass in backends.associated %}
+                        {% if ass.provider == 'facebook' %}
+                            <!-- <img src="{{ass.extra_data.picture.data.url}}" class="profile-pic"> -->
+                            <img src="{% thumbnail ass.extra_data.picture.data 250x250 crop="smart"%}" class="profile-pic">
+                        {% endif %}
+                    {% endif %}
+            {% endfor %}
+        {% else %}
+            <img src="{% thumbnail selected_profile.photo 250x250 crop="smart"%}" class="profile-pic">
+        {% endif %}
+            <h1 class="profile-username">{{selected_profile.user.username|capfirst}}</h1>
+        </div>
+        <div class="profile-info">
+            <div class="followers"><div class="following-count">{{selected_profile.user.following.count}}</div><div>Following</div></div>
+            <div class="following"><div class="followers-count">{{selected_profile.user.followers.count}}</div><div>Followers</div></div>
+            <p class="firstname-title">Firstname: {{selected_profile.user.first_name}}</p>
+            <p class="lastname-title">Lastname: {{selected_profile.user.last_name}}</p>
+            <p class="profile-email-title">Email: {{selected_profile.user.email}}</p>
+            <p class="profile-dob-title">DOB: &nbsp;{{selected_profile.date_of_birth}}</p>
+            <a href="{{selected_profile.get_absolute_url_update}}" class="button-small">Edit Profile</a>
+            {% if request.user.profile != selected_profile %}
+                <button class="button-small follow-button" data-id="{{selected_profile.user.id}}">
+                    {% if request.user in selected_profile.user.followers.all %}
+                        Unfollow
+                    {% else %}
+                        Follow
+                    {% endif %}
+                </button>
+            {% endif %}
+        </div>
+    </article>
+    <article class="post-container">
+        {% with user_post=selected_profile.user.image_post.all %}
+            {% for i in user_post %}
+                    <div class="post-item">
+                        <a href="{{i.get_absolute_url}}">
+                        <img src="{% thumbnail i.image 100x100 crop="smart"%}" />
+                        <p class="title">{{i.title|truncatewords:1}}</p>
+                        </a>
+                    </div>
+            {% endfor %}
+        {% endwith %}
+    </article>
+</section>
+{% endblock %}
+{% block js %}
+<script>
+
+// Ajax csrf token ajax method
+var csrftoken = Cookies.get('csrftoken');
+ function csrfSafeMethod(method) {
+ // these HTTP methods do not require CSRF protection
+ return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+ }
+ $.ajaxSetup({
+ beforeSend: function(xhr, settings) {
+ if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+ xhr.setRequestHeader("X-CSRFToken", csrftoken);
+ }
+ }
+ });
+
+
+
+    $(document).ready(function(){
+    var block_ajax = false;
+    $('.follow-button').click(function(e){
+        e.preventDefault()
+        const user_id = this.dataset.id;
+        block_ajax = true
+        url = "{% url 'follow_user' %}"
+
+        $.post(url,{'user_id': user_id} , function(response){
+            $('.follow-button').text(response['msg'])
+            if(response['msg'] == 'Follow'){
+                // unfollowing
+                $('.followers-count').text(parseInt($('.followers-count').text() - 1))
+            }
+            else{
+                $('.followers-count').text(parseInt($('.followers-count').text() + 1))
+            }
+            
+        })
+    })
+
+
+    })
+</script>
+{% endblock %}

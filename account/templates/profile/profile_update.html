@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/profile-update.css' %}">
+{% endblock %}
+{% block title %}<title>{{selected_user.username|capfirst}}'s Profile Update</title>{% endblock %}
+{% block content %}
+<section>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="{{message.tags}}">
+        {{ message|safe }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <article class="container-main">
+        <div></div>
+        <form method="POST", class="edit-profile-container" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-pic-container">
+                <img src="{{selected_user.profile.photo.url}}" class="profile_pic">
+                <input type="file" name="photo" accept="image/*" id="id_photo" value="Change Profile Picture" class="file-input">
+                <!-- {{profile_form.photo}} -->
+            </div>
+            <!-- <div class="username-container"> -->
+            <p class="profile-username-title">{{user_form.username.label}}</p>
+            <p class="profile-username">{{user_form.username}}</p>
+            <!-- </div> -->
+            <!-- <div class="name-container"> -->
+            <p class="profile-first-title">{{user_form.first_name.label}}</p>
+            <p class="profile-first">{{user_form.first_name}}</p>
+            <p class="profile-last-title">{{user_form.last_name.label}}</p>
+            <p class="profile-last">{{user_form.last_name}}</p>
+            <!-- </div>
+            <div class="email-container"> -->
+            <p class="profile-email-title">{{user_form.email.label}}</p>
+            <p class="profile-email">{{user_form.email}}</p>
+            <!-- </div>
+            <div class="dob-container"> -->
+            <p class="profile-dob-title">{{profile_form.date_of_birth.label}}</p>
+            <p class="profile-dob">{{profile_form.date_of_birth}}</p>
+            <!-- </div> -->
+            <input type="submit" class="button-small" value="Update Profile">
+        </form>
+    </article>
+</section>
+{% endblock %}

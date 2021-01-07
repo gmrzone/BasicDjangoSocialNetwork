@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/login.css' %}">
+{% endblock %}
+{% block title %}
+<title>Login</title>
+{% endblock %}
+            {% block content %}
+            <section>
+                <article class="form-container">
+                    
+                    <form action="" method="POST" class="form-main-container">
+                        <h1 class="form-title">Login</h1>
+                        {% csrf_token %}
+                        <p class="login-username">{{form.username.label}}</p>
+                        <p class="login-username form-input">{{form.username}}</p>
+                        <p class="login-password">{{form.password.label}}</p>
+                        <p class="login-password form-input">{{form.password}}</p>
+                        <p class="login-button"><input type="submit" value="Login"></p>
+                        <p class="login-button"><input type="button" value="Create Account"></p>
+                        <p class="error-mssg">
+                            {% for i in messages%}
+                            {{i}}
+                            {% endfor %}
+                        </p>
+                    </form>
+                </article>
+
+            </section>
+            {% endblock %}

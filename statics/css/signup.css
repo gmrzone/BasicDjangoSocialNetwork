@@ -1,0 +1,75 @@
+.form-main-container {
+    display: grid;
+    grid-template-columns: fit-content(20px) minmax(100px, 550px);
+    grid-template-rows: repeat(9, fit-content(10px));
+    grid-template-areas: "title title"
+                         "username1 username2"
+                         "first1 first2"
+                         "last1 last22"
+                         "email1 email2"
+                         "passworda passwordb"
+                         "password1a password1b"
+                         "button button"
+                         "error error";
+    justify-content: center;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    width: 100%;
+    padding: 0px 20px;
+}
+.form-main-container input[type='password'],
+.form-main-container input[type='email'],
+.form-main-container input[type='text'] {
+    width: 100%;
+    height: 30px;
+}
+.form-title {
+    grid-column: 1 / 3;
+    justify-self: center;
+}
+
+.form-username-label {
+    grid-area: username1;
+}
+.form-username input {
+    grid-area: username2;
+
+/* .form-first-label {
+    grid-area: first1;
+} */
+
+.form-first input {
+    grid-area: first2;
+}
+
+.form-last-label {
+    grid-area: last1;
+}
+.form-last input {
+    grid-area: last2;
+}
+.form-email-label {
+    grid-area: email1;
+}
+.form-email input {
+    grid-area: email2;
+}
+
+.form-password-label {
+    grid-area: passworda;
+}
+.form-password input {
+    grid-area: passwordb;
+}
+.form-password1-label {
+    grid-area: password1a;
+}
+.form-password1 input {
+    grid-area: password1b;
+}
+
+#form-buttons {
+    grid-area: button !important;
+    display: flex;
+    justify-content: space-around;
+}

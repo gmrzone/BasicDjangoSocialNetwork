@@ -1,0 +1,111 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<style>
+    .main-container {
+        padding: 20px 0;
+    }
+    .image-preview {
+        width: 1000px;
+        height: 800px;
+    }
+</style>
+{% endblock %}
+{% block title %}
+<title>{{selected_post.title}}</title>
+{% endblock %}
+{% block content %}
+<section>
+    <article class="main-container">
+        <p class="post-title">{{selected_post.title}}</p>
+        <p>{{selected_post.description}}</p>
+        {% load thumbnail %}
+        <img src="{% thumbnail selected_post.image 1000x0 %}" class="">
+        <p class="like-count">{{selected_post.users_like.all.count}}</p>
+        <button class="like-button" data-id="{{selected_post.pk}}">
+            {% if request.user in selected_post.users_like.all %}
+                unlike
+            {% else %}
+                like
+            {% endif %}
+        
+        </button>
+        <p class="image-views">
+            {{post_views}} View{{post_views|pluralize}}
+        </p>
+    </article>
+</section>
+{% endblock %}
+{% block domready %}
+
+{% endblock %}
+{% block js %}
+<script>
+     var csrftoken = Cookies.get('csrftoken');
+ function csrfSafeMethod(method) {
+ // these HTTP methods do not require CSRF protection
+ return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+ }
+ $.ajaxSetup({
+ beforeSend: function(xhr, settings) {
+ if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+ xhr.setRequestHeader("X-CSRFToken", csrftoken);
+ }
+ }
+ });
+   
+ jQuery(document).ready(function(){
+    jQuery('.like-button').click(function(e){
+        e.preventDefault()
+        var post_id = parseInt(this.dataset.id)
+        var like_count = parseInt(jQuery('.like-count').text())
+        var url = "{% url 'like_image' %}";
+        
+        // jQuery.ajax({
+        //     type: 'POST',
+        //     url: url,
+        //     async: false,
+        //     data: {
+        //         'post_id': post_id,
+                
+        //     },
+        //     success:function(response){
+        //         if(response['action'] == 'like'){
+        //             jQuery('.like-count').text(like_count - 1)
+        //         }
+        //         else{
+        //             jQuery('.like-count').text(like_count + 1)
+        //         }
+        //         jQuery('.like-button').text(response['action'])
+
+
+
+        //     },
+        //     error:function(response){
+
+        //     },
+
+        // })
+
+        
+        $.post("{% url 'like_image' %}",{
+            post_id: post_id,
+        },
+        function(response){
+                if(response['action'] == 'like'){
+                    jQuery('.like-count').text(like_count - 1)
+                }
+                else{
+                    jQuery('.like-count').text(like_count + 1)
+                }
+                jQuery('.like-button').text(response['action'])
+        })
+
+    
+
+    });
+
+ });
+            
+</script>
+{% endblock %}

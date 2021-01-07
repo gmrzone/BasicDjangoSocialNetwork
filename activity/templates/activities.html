@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/activities.css' %}">
+{% endblock %}
+{% block title %}
+<title>
+    Activities
+</title>
+{% endblock %}
+{% block content %}
+<section class="main-container">
+    <h1 class="main-title">Whats Happening</h1>
+    <article class="activities-container">
+        {% for activity in activities %}
+            <div class="activity-item">
+            {% with user=activity.user profile=activity.user.profile target=activity.target %}
+                {% thumbnail activity.user.profile.photo 50x50 crop='100%' as image%}
+                <p class="item-detail">
+                    <img src="{{image.url}}" alt="{{user.get_full_name}}" class="first-image" style="border-radius: 50%; border: 1px solid black;">
+                    <a href="{{user.get_absolute_url}}"  class="activity-link">{{user.get_full_name|capfirst}}</a>
+                     {{activity.action}} 
+                     {% if target.image %}
+                     {% thumbnail activity.target.image 50x50 crop="100%" as image1%}
+                     <img src="{{image1.url}}" alt="activity.target.title" class="second-image" style="border-radius: 50%; border: 1px solid black;">
+                    {% endif %}
+                    {% if target.profile.photo %}
+                        {% thumbnail activity.target.profile.photo 50x50 crop="100%" as image1%}
+                        <img src="{{image1.url}}" alt="{{target.get_full_name}}" class="second-image" style="border-radius: 50%; border: 1px solid black;">
+                    {% endif %}
+                 <a href="{{target.get_absolute_url}}" class="activity-link">{{activity.target|capfirst|truncatewords:'1'}}</a>
+                </p>
+                <p class="item-time">
+                    {{activity.created|timesince}} ago
+                </p>
+            </div>
+            {% endwith %}
+        {% endfor %}
+    </article>
+</section>
+{% endblock %}
+{% block js %}
+{% endblock %}

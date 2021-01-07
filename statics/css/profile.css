@@ -1,0 +1,129 @@
+.profile-pic {
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+}
+
+.container-main {
+  padding: 50px 20px;
+  display: flex;
+  column-gap: 20px;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+.container-main .profile-pic-container {
+  display: flex;
+  flex-direction: column;
+}
+.container-main .profile-username {
+  text-align: center;
+}
+.container-main .profile-info {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 40% 40%;
+  grid-template-areas: "followers following" "firstname lastname" "email dob" "followbtn button";
+  align-items: center;
+  row-gap: 10px;
+  column-gap: 10px;
+}
+.container-main .profile-info .followers {
+  grid-area: followers;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.container-main .profile-info .following {
+  grid-area: following;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.container-main .profile-info .firstname-title {
+  grid-area: firstname;
+  justify-self: center;
+}
+.container-main .profile-info .lastname-title {
+  grid-area: lastname;
+  justify-self: center;
+}
+.container-main .profile-info .profile-email-title {
+  grid-area: email;
+  justify-self: center;
+}
+.container-main .profile-info .profile-dob-title {
+  grid-area: dob;
+  justify-self: center;
+}
+.container-main .profile-info .button-small {
+  grid-area: button;
+  justify-self: center;
+}
+.container-main .profile-info .follow-button {
+  border: none;
+  grid-area: followbtn;
+  justify-self: center;
+  font: inherit;
+}
+
+.post-container {
+  margin-top: 20px;
+  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+.post-container .post-item {
+  color: black;
+}
+.post-container .post-item img {
+  opacity: 0.7;
+}
+.post-container .post-item a {
+  text-decoration: none;
+  color: black;
+}
+.post-container .post-item:hover {
+  background: #ffe0c4;
+}
+.post-container .post-item:hover img {
+  opacity: 1;
+}
+
+.profile-list-container {
+  padding: 50px 0;
+}
+.profile-list-container .profile-list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 25px;
+  row-gap: 25px;
+}
+.profile-list-container .profile-list .profile-item {
+  padding: 10px;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+.profile-list-container .profile-list .profile-item img {
+  opacity: 0.8;
+}
+.profile-list-container .profile-list .profile-item a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #50b9ff;
+}
+.profile-list-container .profile-list .profile-item:hover {
+  background: rgba(255, 224, 196, 0.5);
+}
+.profile-list-container .profile-list .profile-item:hover img {
+  opacity: 1;
+}
+
+/*# sourceMappingURL=profile.css.map */

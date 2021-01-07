@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}">
+{% endblock %}
+{% block title %}
+<title>Login</title>
+{% endblock %}
+{% block content %}
+<section class="top-section">
+    <h1 class="title">Welcome {{request.user.username}}</h1>
+    <div class="most-viewed-post">
+        <h3>Most Viewed Posts</h3>
+        {% for i in most_viewed_post %}
+            <a href="{{ i.get_absolute_url }}">{{i.title}}</a>
+        {% endfor %}
+    </div>
+</section>
+<hr>
+<section>
+    <article>
+        {% with total_images_created=request.user.image_post.count %}
+            <p>You have Bookmarked {{total_images_created}} image{{total_images_created|pluralize}}</p>
+        {% endwith %}
+    </article>
+    <article>
+        <p>Drag the button to bookmark tool to bookmark images from external websites <a href="javascript:{% include 'bookmarklet_launcher.js'%}" class="btn-success">Bookmark</a></p>
+    </article>
+</section>
+<section>
+    <article class="posts-container">
+        <h1>List of all Posts</h1>
+        <div class="post-list">
+            {% include 'home/ajax_post_list.html' %}
+
+        </div>
+    </article>
+</section>
+{% endblock %}
+{% block js %}
+<script>
+var page_no = 2
+var empty_page = false
+var block_req = false
+
+$(window).scroll(function(){
+    var margin = $(document).height() - $(window).height() - 100
+    if ($(window).scrollTop() > margin && empty_page == false && block_req ==false){
+        block_req = true
+        $.get('?page='+page_no, function(response){
+            block_req = true
+            page_no += 1
+            if (response == ''){
+                empty_page = true
+            }
+            else{
+                block_req = false
+                $('.post-list').append(response)
+
+            }
+        })
+    }
+
+})
+
+//  var page = 1;
+//  var empty_page = false;
+//  var block_request = false;
+//  $(window).scroll(function() {
+//  var margin = $(document).height() - $(window).height() - 200;
+//  if($(window).scrollTop() > margin && empty_page == false &&
+//  block_request == false) {
+//  block_request = true;
+//  page += 1;
+//  $.get('?page=' + page, function(data) {
+//  if(data == '') {
+//  empty_page = true;
+//  }
+//  else {
+//  block_request = false;
+//  $('.post-list').append(data);
+//  }
+//  });
+//  }
+//  });
+
+</script>
+{% endblock %}

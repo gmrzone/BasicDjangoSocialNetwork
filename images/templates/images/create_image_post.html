@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/image_post.css'%}">
+{% endblock %}
+{% block title %}
+<title>Create Image Post</title>
+{% endblock %}
+{% block content %}
+<section>
+    {% if messages %}
+        {% for i in messages %}
+            <p class="{{i.tags}}">{{i}}</p>
+        {% endfor %}
+    {% endif %}
+    <article class="main-container">
+        <h1 class="main-title">Bookmark A Image.</h1>
+        <img src="{{request.GET.url}}" class="image-preview">
+        <form method="POST" class="form-container" action="">
+            {% csrf_token %}
+            {{image_form.url}}
+            {{image_form.title.label}}
+            {{image_form.title}}
+            {{image_form.description.label}}
+            {{image_form.description}}
+            <input type="submit" value="Create" class="form-button">
+        </form>
+    </article>
+</section>
+{% endblock %}
+{% block js %}
+{% endblock %}

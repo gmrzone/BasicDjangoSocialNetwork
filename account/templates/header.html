@@ -1,0 +1,42 @@
+{% load static %}
+<div class="heading-main">
+    <a href="{% url 'home' %}" class="heading-text">ImageBook</a>
+</div>
+{% if request.user.is_authenticated %}
+<div class="search-container">
+<img src='{% static "/images/zoom.svg" %}' height="30px" class="search-icon"/>
+<form method="POST" class="search-form" action="">
+    <input type="text" class="search-input" placeholder="Search">
+</form>
+</div>
+{% endif %}
+<nav class="main-nav">
+    <ul class="main-nav-list-items">
+        {% if request.user.is_authenticated %}
+        
+        <li class="main-nav-list-item">
+            <a href="{% url 'home' %}" {% if section == 'home' %}class="main-nav-link active"{% else %}class="main-nav-link"{% endif %}>Home</a>
+        </li>
+        <li class="main-nav-list-item">
+            <a href="{{request.user.profile.get_absolute_url}}" {% if section == 'profile' %}class="main-nav-link active"{% else %}class="main-nav-link"{% endif %}>Profile</a>
+        </li>
+        <li class="main-nav-list-item">
+            <a href="" {% if section == 'settings' %}class="main-nav-link active"{% else %}class="main-nav-link"{% endif %}>Settings</a>
+        </li>
+        <li class="main-nav-list-item">
+            <a href="{% url 'activity' %}" {% if section == 'activity' %}class="main-nav-link active"{% else %}class="main-nav-link"{% endif %}>Activity</a>
+        </li>
+        <li>
+            <a href="{% url 'profile_list' %}" {% if section == 'users' %}class="main-nav-link active"{% else %}class="main-nav-link"{% endif %}>Users</a>
+        </li>
+        <li class="main-nav-list-item">
+            <a href="{% url 'logout' %}" class="main-nav-link">logout</a>
+        </li>
+        {% else %}
+        <div class="main-nav-list-item">
+            <a href="{% url 'login' %}" class="button-small">Login</a>
+            <a href="{% url 'signup' %}" class="button-small">Signup</a>
+        <div>
+        {% endif %}
+    </ul>
+</nav>

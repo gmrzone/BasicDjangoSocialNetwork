@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/login.css' %}">
+{% endblock %}
+{% block title %}
+<title>Login</title>
+{% endblock %}
+            {% block content %}
+            <section>
+                {% if messages %}
+                {% for message in messages %}
+                <p class="{{ message.tags }}">
+                {{ message|safe }}
+                </p>
+                {% endfor %}
+                {% endif %}
+                <article class="form-container">
+                    
+                    <form action="" method="POST" class="form-main-container">
+                        <h1 class="form-title">Login</h1>
+                        {% csrf_token %}
+                        <p class="login-username">{{login_form.username.label}}</p>
+                        <p class="login-username form-input">{{login_form.username}}</p>
+                        <p class="login-password">{{login_form.password.label}}</p>
+                        <p class="login-password form-input">{{login_form.password}}</p>
+                        <div style="grid-area: button; display: flex; justify-content: space-around;">
+                            <input type="submit" value="Login" class="button-small">
+                            <input type="button" value="Signup" class="button-small">
+                        </div>                        
+                    </form>
+                </article>
+
+                    <a href="{% url "social:begin" "facebook" %}">Login with Facebook</a>
+                    <a href="{% url "social:begin" "google-oauth2" %}">Login with Google</a>
+
+            </section>
+            {% endblock %}

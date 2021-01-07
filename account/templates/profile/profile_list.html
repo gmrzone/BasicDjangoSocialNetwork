@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+{% load thumbnail %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}">
+{% endblock %}
+{% block title %}
+<title>
+    User Lists  
+</title>
+{% endblock %}
+{% block content %}
+<section class="profile-list-container">
+    <h1>List of All User</h1>
+    <article class="profile-list">
+        {% for user in all_user %}
+            <div class="profile-item">
+                <a href="{{user.get_absolute_url}}">
+                <img src="{% thumbnail user.profile.photo 180x180 crop="smart"%}" />
+                <p class="fullname">{{user.get_full_name}}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </article>
+</section>
+{% endblock %}

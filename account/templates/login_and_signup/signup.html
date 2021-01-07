@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block cssfiles %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/signup.css' %}">
+{% endblock %}
+{% block title %}
+<title>Create Account</title>
+{% endblock %}
+            {% block content %}
+            <section>
+                <article class="form-container">
+                    
+                    <form action="" method="POST" class="form-main-container">
+                        <h1 class="form-title">Create Account</h1>
+                        {% csrf_token %}
+                        <p class="form-username-label">{{signup_form.username.label}}</p>
+                        <p class="form-username">{{signup_form.username}}</p>
+                        <p class="form-first-label">{{signup_form.first_name.label}}</p>
+                        <p class="form-first">{{signup_form.first_name}}</p>
+                        <p class="form-last-label">{{signup_form.last_name.label}}</p>
+                        <p class="form-last">{{signup_form.last_name}}</p>
+                        <p class="form-email-label">{{signup_form.email.label}}</p>
+                        <p class="form-email">{{signup_form.email}}</p>
+                        <p  class="form-password-label">{{signup_form.password1.label}}</p>
+                        <p  class="form-password">{{signup_form.password1}}</p>
+                        <p class="form-password1-label">{{signup_form.password2.label}}</p>
+                        <p class="form-password1">{{signup_form.password2}}</p>
+                        <div style="grid-area: button; display: flex; justify-content: space-around;">
+                            <input type="submit" value="Create Account" class="button-small">
+                            <input type="button" value="Login" class="button-small">
+                        </div>
+                            {% if signup_form.errors %}
+                            <p class="error-mssg">
+                            Both Password Dont Match
+                            
+                            <!-- {% for i in messages%}
+                            {{i}}
+                            {% endfor %} -->
+                             </p>
+                            {% endif %}                      
+                    </form>
+                </article>
+            </section>
+            {% endblock %}

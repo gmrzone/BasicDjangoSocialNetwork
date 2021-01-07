@@ -1,0 +1,50 @@
+.top-section {
+    display: flex;
+    justify-content: space-between;
+}
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    
+}
+.most-viewed-post {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.200);
+}
+.most-viewed-post a {
+    text-decoration: none;
+    color: salmon;
+}
+.most-viewed-post a:hover {
+    color: black;
+}
+.post-item {
+    display: grid;
+    grid-template-columns: auto 80% auto;
+    grid-template-areas: "image title -"
+                         "image desc author";
+    justify-content: start;
+    align-content: center;
+    padding: 20px;
+
+}
+.title {
+    grid-area: title;
+}
+.description {
+    grid-area: desc;
+}
+.image-img {
+    grid-area: image;
+}
+.image-img img {
+    width: 100px;
+    height: 100px;
+}
+.author {
+    grid-area: author;
+    
+}
